@@ -75,7 +75,8 @@ def webhook():
 
 
     elif intent == "ColorPreferenceIntent":
-        color = parameters.get("Color", "").lower()
+        raw_color = parameters.get("Color", "")
+        color = raw_color.lower() if raw_color else ""
 
         # Retrieve from previous context
         event = ""
@@ -88,10 +89,17 @@ def webhook():
                 season = context.get("parameters", {}).get("Season", "")
                 break
 
-        response_text = (
-            f"Thanks! I’ll keep {color} in mind when recommending your outfit. "
-            "Do you have any clothing type preferences? Options: formal or casual"
-        )
+        if not color or color in ["no", "none"]:
+            response_text = (
+                "Alright, no problem! Do you have any clothing type preferences? "
+                "Options: formal or casual"
+            )
+        else:
+            response_text = (
+                f"Thanks! I’ll keep {color} in mind when recommending your outfit. "
+                "Do you have any clothing type preferences? Options: formal or casual"
+            )
+
 
         return jsonify({
             "fulfillmentText": response_text,
