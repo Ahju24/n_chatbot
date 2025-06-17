@@ -13,7 +13,7 @@ def webhook():
     intent = req.get("queryResult", {}).get("intent", {}).get("displayName", "")
     parameters = req.get("queryResult", {}).get("parameters", {})
 
-    if intent == "WelcomeIntent":
+    if intent == "Welcome_Neutral":
         
         context_name = f"welcome-followup"
 
