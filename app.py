@@ -34,7 +34,9 @@ def webhook():
 
 
     elif intent == "SelectEventIntent":
-        event = parameters.get("Event", "").lower()
+        event_param = parameters.get("Event", "")
+        event = event_param[0].lower() if isinstance(event_param, list) else event_param.lower()
+
 
         valid_events = ["job interview", "date", "lecture"]
         if event not in valid_events:
